@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: sb-users
+  cache:
+    cache-names: users
+    type: redis
+    redis:
+      key-prefix: sb
+  redis:
+    url: redis://localhost:6379
