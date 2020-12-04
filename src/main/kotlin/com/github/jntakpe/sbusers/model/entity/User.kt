@@ -3,6 +3,7 @@ package com.github.jntakpe.sbusers.model.entity
 import com.github.jntakpe.commons.mongo.Identifiable
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.core.mapping.Document
+import java.io.Serializable
 
 @Document
 data class User(
@@ -13,7 +14,7 @@ data class User(
     val lastName: String? = null,
     val phoneNumber: String? = null,
     override val id: ObjectId = ObjectId(),
-) : Identifiable {
+) : Identifiable, Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
