@@ -1,5 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val springCloudVersion: String by project
+val mockkVersion: String by project
+val assertJVersion: String by project
+val testContainersVersion: String by project
+
 plugins {
     id("org.springframework.boot") version "2.4.0"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
@@ -16,7 +21,7 @@ repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
 }
 
-extra["springCloudVersion"] = "2020.0.0-M5"
+extra["springCloudVersion"] = springCloudVersion
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -32,6 +37,13 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    api("org.junit.jupiter:junit-jupiter-params")
+    api("io.mockk:mockk:$mockkVersion")
+    api("org.assertj:assertj-core:$assertJVersion")
+    api("org.testcontainers:testcontainers:$testContainersVersion")
+    api("org.testcontainers:junit-jupiter:$testContainersVersion")
+
+    testImplementation("org.testcontainers:mongodb:$testContainersVersion")
 }
 
 dependencyManagement {
