@@ -35,6 +35,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.hibernate.validator:hibernate-validator")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     api("org.junit.jupiter:junit-jupiter-params")
