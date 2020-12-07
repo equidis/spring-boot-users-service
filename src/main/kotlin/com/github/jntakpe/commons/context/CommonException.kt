@@ -1,10 +1,11 @@
 package com.github.jntakpe.commons.context
 
 import org.springframework.http.HttpStatus
+import org.springframework.web.server.ResponseStatusException
 
 class CommonException(
     override val message: String,
     val logging: (String, Throwable) -> Unit,
-    val code: HttpStatus,
+    status: HttpStatus,
     cause: Throwable? = null,
-) : RuntimeException(message, cause)
+) : ResponseStatusException(status, message, cause)
