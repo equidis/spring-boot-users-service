@@ -21,7 +21,7 @@ fun UserDto.toEntity() = User(
     id?.let { ObjectId(it) } ?: ObjectId()
 )
 
-fun User.toResponse() = UserDto(username, email, countryCode, firstName, lastName, phoneNumber, id.toString())
+fun User.toDto() = UserDto(username, email, countryCode, firstName, lastName, phoneNumber, id.toString())
 
 private fun String?.removeWhitespaces() = this?.filter { !it.isWhitespace() }
 

@@ -5,8 +5,8 @@ import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.JDOE_MAIL
 import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.JDOE_USERNAME
 import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.jdoe
 import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.mmoe
+import com.github.jntakpe.sbusers.mapping.toDto
 import com.github.jntakpe.sbusers.mapping.toEntity
-import com.github.jntakpe.sbusers.mapping.toResponse
 import com.github.jntakpe.sbusers.model.dto.UserDto
 import com.github.jntakpe.sbusers.model.entity.User
 import org.assertj.core.api.Assertions.assertThat
@@ -45,14 +45,14 @@ internal class UserMappingsKtTest {
     }
 
     @Test
-    fun `to response should map partial`() {
+    fun `to dto should map partial`() {
         val expected = with(mmoe) { UserDto(username, email, countryCode, id = id.toString()) }
-        assertThat(mmoe.toResponse()).usingRecursiveComparison().isEqualTo(expected)
+        assertThat(mmoe.toDto()).usingRecursiveComparison().isEqualTo(expected)
     }
 
     @Test
-    fun `to response should map full`() {
+    fun `to dto should map full`() {
         val expected = with(jdoe) { UserDto(username, email, countryCode, firstName, lastName, phoneNumber, id.toString()) }
-        assertThat(jdoe.toResponse()).usingRecursiveComparison().isEqualTo(expected)
+        assertThat(jdoe.toDto()).usingRecursiveComparison().isEqualTo(expected)
     }
 }
