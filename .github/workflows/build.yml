@@ -1,0 +1,42 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '**'
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Configure JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches/
+            ~/.gradle/wrapper/dists
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle.properties', 'gradle/**') }}
+          restore-keys: -${{ runner.os }}-gradle-
+      - name: Build artifacts
+        run: ./gradlew assemble
+        env:
+          ORG_GRADLE_PROJECT_githubActor: ${{ env.GITHUB_ACTOR }}
+          ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run test suite
+        run: ./gradlew check
+        env:
+          ORG_GRADLE_PROJECT_githubActor: ${{ env.GITHUB_ACTOR }}
+          ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Code coverage
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./build/reports/jacoco/test/jacocoTestReport.xml
