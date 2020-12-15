@@ -1,9 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val commonsVersion: String by project
 val springCloudVersion: String by project
-val mockkVersion: String by project
-val assertJVersion: String by project
-val testContainersVersion: String by project
 
 plugins {
     id("org.springframework.boot") version "2.4.0"
@@ -17,7 +15,10 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
+    mavenLocal()
     mavenCentral()
+    jcenter()
+    mavenGithub("equidis/sb-commons")
     maven { url = uri("https://repo.spring.io/milestone") }
 }
 
@@ -25,26 +26,13 @@ extra["springCloudVersion"] = springCloudVersion
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-cache")
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.hibernate.validator:hibernate-validator")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
-    api("org.junit.jupiter:junit-jupiter-params")
-    api("io.mockk:mockk:$mockkVersion")
-    api("org.assertj:assertj-core:$assertJVersion")
-    api("org.testcontainers:testcontainers:$testContainersVersion")
-    api("org.testcontainers:junit-jupiter:$testContainersVersion")
-
-    testImplementation("org.testcontainers:mongodb:$testContainersVersion")
+    implementation("com.github.jntakpe:sb-commons-cache:$commonsVersion")
+    implementation("com.github.jntakpe:sb-commons-mongo:$commonsVersion")
+    implementation("com.github.jntakpe:sb-commons-web:$commonsVersion")
+    testImplementation("com.github.jntakpe:sb-commons-cache-test:$commonsVersion")
+    testImplementation("com.github.jntakpe:sb-commons-mongo-test:$commonsVersion")
+    testImplementation("com.github.jntakpe:sb-commons-test:$commonsVersion")
 }
 
 dependencyManagement {
@@ -63,3 +51,15 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+fun RepositoryHandler.mavenGithub(repository: String) = maven {
+    name = "Github_packages"
+    setUrl("https://maven.pkg.github.com/$repository")
+    credentials {
+        val githubActor: String? by project
+        val githubToken: String? by project
+        username = githubActor
+        password = githubToken
+    }
+}
+

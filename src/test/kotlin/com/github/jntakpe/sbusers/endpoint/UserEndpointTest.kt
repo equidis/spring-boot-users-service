@@ -1,7 +1,6 @@
 package com.github.jntakpe.sbusers.endpoint
 
 import com.github.jntakpe.commons.context.CommonExceptionDto
-import com.github.jntakpe.commons.test.assertStatusException
 import com.github.jntakpe.sbusers.dao.UserDao
 import com.github.jntakpe.sbusers.mapping.toDto
 import com.github.jntakpe.sbusers.model.dto.UserDto
@@ -53,7 +52,7 @@ internal class UserEndpointTest(
             .uri("$usersPath/{id}", user.id.toString())
             .exchange()
             .expectBody<CommonExceptionDto>()
-            .consumeWith { it.responseBody!!.assertStatusException(HttpStatus.NOT_FOUND) }
+            .consumeWith { assertThat(it.responseBody!!.code).isEqualTo(HttpStatus.NOT_FOUND.value()) }
     }
 
     @ParameterizedTest
@@ -77,7 +76,7 @@ internal class UserEndpointTest(
             .uri { it.path(usersPath).queryParam("username", user.username).build() }
             .exchange()
             .expectBody<CommonExceptionDto>()
-            .consumeWith { it.responseBody!!.assertStatusException(HttpStatus.NOT_FOUND) }
+            .consumeWith { assertThat(it.responseBody!!.code).isEqualTo(HttpStatus.NOT_FOUND.value()) }
     }
 
     @ParameterizedTest
@@ -105,7 +104,7 @@ internal class UserEndpointTest(
             .exchange()
             .expectBody<CommonExceptionDto>()
             .consumeWith {
-                it.responseBody!!.assertStatusException(HttpStatus.CONFLICT)
+                assertThat(it.responseBody!!.code).isEqualTo(HttpStatus.CONFLICT.value())
                 assertThat(dao.count()).isEqualTo(initSize)
             }
     }
@@ -117,7 +116,7 @@ internal class UserEndpointTest(
             .bodyValue(User("", "jdoe@mail.com", "FR"))
             .exchange()
             .expectBody<CommonExceptionDto>()
-            .consumeWith { it.responseBody!!.assertStatusException(HttpStatus.BAD_REQUEST) }
+            .consumeWith { assertThat(it.responseBody!!.code).isEqualTo(HttpStatus.BAD_REQUEST.value()) }
     }
 
     @Test
@@ -127,6 +126,6 @@ internal class UserEndpointTest(
             .bodyValue(User("invalid", "wrong.mail", "FR"))
             .exchange()
             .expectBody<CommonExceptionDto>()
-            .consumeWith { it.responseBody!!.assertStatusException(HttpStatus.BAD_REQUEST) }
+            .consumeWith { assertThat(it.responseBody!!.code).isEqualTo(HttpStatus.BAD_REQUEST.value()) }
     }
 }

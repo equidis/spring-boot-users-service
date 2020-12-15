@@ -1,12 +1,10 @@
-package com.github.jntakpe.users.mapping
+package com.github.jntakpe.sbusers.mapping
 
-import com.github.jntakpe.commons.test.assertStatusException
+import com.github.jntakpe.commons.test.assertCommonException
 import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.JDOE_MAIL
 import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.JDOE_USERNAME
 import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.jdoe
 import com.github.jntakpe.sbusers.dao.UserDao.PersistedData.mmoe
-import com.github.jntakpe.sbusers.mapping.toDto
-import com.github.jntakpe.sbusers.mapping.toEntity
 import com.github.jntakpe.sbusers.model.dto.UserDto
 import com.github.jntakpe.sbusers.model.entity.User
 import org.assertj.core.api.Assertions.assertThat
@@ -41,7 +39,7 @@ internal class UserMappingsKtTest {
     @Test
     fun `to entity should fail when country code not iso`() {
         val dto = UserDto(JDOE_USERNAME, JDOE_MAIL, "ZY")
-        catchThrowable { dto.toEntity() }.assertStatusException(HttpStatus.BAD_REQUEST)
+        catchThrowable { dto.toEntity() }.assertCommonException(HttpStatus.BAD_REQUEST)
     }
 
     @Test

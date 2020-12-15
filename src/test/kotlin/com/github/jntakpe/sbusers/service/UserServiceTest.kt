@@ -1,6 +1,6 @@
 package com.github.jntakpe.sbusers.service
 
-import com.github.jntakpe.commons.test.expectStatusException
+import com.github.jntakpe.commons.test.expectCommonException
 import com.github.jntakpe.sbusers.dao.UserDao
 import com.github.jntakpe.sbusers.model.entity.User
 import com.github.jntakpe.sbusers.repository.UserRepository
@@ -82,7 +82,7 @@ internal class UserServiceTest(
     @ArgumentsSource(UserDao.TransientData::class)
     fun `find by id fail when user does not exists`(user: User) {
         service.findById(user.id).test()
-            .expectStatusException(HttpStatus.NOT_FOUND)
+            .expectCommonException(HttpStatus.NOT_FOUND)
             .verify()
     }
 
@@ -126,7 +126,7 @@ internal class UserServiceTest(
     @ArgumentsSource(UserDao.TransientData::class)
     fun `find by username fail when user does not exists`(user: User) {
         service.findByUsername(user.username).test()
-            .expectStatusException(HttpStatus.NOT_FOUND)
+            .expectCommonException(HttpStatus.NOT_FOUND)
             .verify()
     }
 
@@ -158,7 +158,7 @@ internal class UserServiceTest(
     @ArgumentsSource(UserDao.PersistedData::class)
     fun `create should fail with already exists code when integrity constraint violated`(user: User) {
         service.create(user).test()
-            .expectStatusException(HttpStatus.CONFLICT)
+            .expectCommonException(HttpStatus.CONFLICT)
             .verify()
     }
 
@@ -170,7 +170,7 @@ internal class UserServiceTest(
         every { mockedRepository.insert(any<User>()) } returns exception.toMono()
         UserService(mockedRepository, mockkClass(RedisCacheManager::class, relaxed = true)).create(UserDao.TransientData.data().first())
             .test()
-            .expectStatusException(HttpStatus.INTERNAL_SERVER_ERROR)
+            .expectCommonException(HttpStatus.INTERNAL_SERVER_ERROR)
             .verify()
     }
 
@@ -180,7 +180,7 @@ internal class UserServiceTest(
         every { mockedRepository.insert(any<User>()) } returns NullPointerException("Oops").toMono()
         UserService(mockedRepository, mockkClass(RedisCacheManager::class, relaxed = true)).create(UserDao.TransientData.data().first())
             .test()
-            .expectStatusException(HttpStatus.INTERNAL_SERVER_ERROR)
+            .expectCommonException(HttpStatus.INTERNAL_SERVER_ERROR)
             .verify()
     }
 }
