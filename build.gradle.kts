@@ -8,6 +8,7 @@ plugins {
     jacoco
     id("org.springframework.boot") version "2.4.0"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    id("com.google.cloud.tools.jib") version "2.7.0"
     kotlin("jvm") version "1.4.21"
     kotlin("plugin.spring") version "1.4.21"
 }
@@ -52,6 +53,12 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+jib {
+    to {
+        image = "eu.gcr.io/equidis/springboot-users:${project.version}"
+    }
 }
 
 tasks {
