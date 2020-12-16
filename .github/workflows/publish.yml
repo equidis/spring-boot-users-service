@@ -26,11 +26,6 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_githubActor: ${{ env.GITHUB_ACTOR }}
           ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish artifacts
-        run: ./gradlew publish
-        env:
-          ORG_GRADLE_PROJECT_githubActor: ${{ env.GITHUB_ACTOR }}
-          ORG_GRADLE_PROJECT_githubToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Configures gcloud CLI
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
