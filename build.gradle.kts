@@ -28,10 +28,10 @@ repositories {
 extra["springCloudVersion"] = springCloudVersion
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
     implementation("com.github.jntakpe:sb-commons-cache:$commonsVersion")
+    implementation("com.github.jntakpe:sb-commons-management:$commonsVersion")
     implementation("com.github.jntakpe:sb-commons-mongo:$commonsVersion")
+    implementation("com.github.jntakpe:sb-commons-tracing:$commonsVersion")
     implementation("com.github.jntakpe:sb-commons-web:$commonsVersion")
     testImplementation("com.github.jntakpe:sb-commons-cache-test:$commonsVersion")
     testImplementation("com.github.jntakpe:sb-commons-mongo-test:$commonsVersion")
