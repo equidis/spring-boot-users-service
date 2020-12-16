@@ -4,6 +4,7 @@ val commonsVersion: String by project
 val springCloudVersion: String by project
 
 plugins {
+    idea
     jacoco
     id("org.springframework.boot") version "2.4.0"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
