@@ -4,6 +4,7 @@ val commonsVersion: String by project
 val springCloudVersion: String by project
 
 plugins {
+    jacoco
     id("org.springframework.boot") version "2.4.0"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     kotlin("jvm") version "1.4.21"
@@ -50,6 +51,23 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks {
+    jacocoTestReport {
+        dependsOn(test)
+        reports {
+            xml.isEnabled = true
+        }
+        classDirectories.setFrom(
+            sourceSets.main.get().output.asFileTree.matching {
+                exclude("build/generated", "**/model/entity/**")
+            }
+        )
+    }
+    check {
+        dependsOn(jacocoTestReport)
+    }
 }
 
 fun RepositoryHandler.mavenGithub(repository: String) = maven {
