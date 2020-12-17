@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
+import org.springframework.cloud.contract.verifier.config.TestMode.WEBTESTCLIENT
 
 val commonsVersion: String by project
 
@@ -32,6 +34,7 @@ dependencies {
     testImplementation("com.github.jntakpe:sb-commons-cache-test:$commonsVersion")
     testImplementation("com.github.jntakpe:sb-commons-mongo-test:$commonsVersion")
     testImplementation("com.github.jntakpe:sb-commons-test:$commonsVersion")
+    testImplementation("com.github.jntakpe:sb-commons-web-test:$commonsVersion")
 }
 
 tasks.withType<KotlinCompile> {
