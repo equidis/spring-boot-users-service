@@ -1,6 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
 import org.springframework.cloud.contract.verifier.config.TestMode.WEBTESTCLIENT
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 
 val commonsVersion: String by project
 
@@ -70,6 +73,30 @@ tasks {
     }
     check {
         dependsOn(jacocoTestReport)
+    }
+    val metadataPath = Paths.get("$buildDir/build-metadata.yaml")
+    val deploymentZip = register<Zip>("deploymentZip") {
+        archiveFileName.set("deployment-metadata.zip")
+        destinationDirectory.set(Paths.get(buildDir.toString(), "libs").toFile())
+        from(metadataPath.toString())
+    }
+    bootJar {
+        doLast {
+            if (!Files.exists(metadataPath)) Files.createFile(metadataPath)
+            Files.writeString(
+                metadataPath,
+                """
+        app:
+          name: ${project.name}
+          version: ${project.version}
+        image:
+          name: sb-${project.name}
+    """.trimIndent(), StandardOpenOption.SYNC
+            )
+        }
+    }
+    assemble {
+        dependsOn(deploymentZip)
     }
 }
 
