@@ -6,6 +6,7 @@ val commonsVersion: String by project
 
 plugins {
     idea
+    `maven-publish`
     jacoco
     id("org.springframework.boot") version "2.4.0"
     id("org.springframework.cloud.contract") version "2.2.5.RELEASE"
@@ -78,6 +79,12 @@ contracts {
     setFailOnNoContracts(false)
     setBasePackageForTests("com.github.jntakpe.sbusers")
     setBaseClassForTests("com.github.jntakpe.commons.web.test.ContractBaseClass")
+}
+
+publishing {
+    repositories {
+        mavenGithub("equidis/spring-boot-users-service")
+    }
 }
 
 fun RepositoryHandler.mavenGithub(repository: String) = maven {
