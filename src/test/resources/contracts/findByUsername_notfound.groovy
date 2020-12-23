@@ -8,9 +8,6 @@ Contract.make {
                 parameter 'username': 'unknown'
             }
         }
-        headers {
-            header(contentType(), applicationJson())
-        }
     }
     response {
         status NOT_FOUND()

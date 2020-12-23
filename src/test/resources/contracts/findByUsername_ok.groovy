@@ -8,9 +8,6 @@ Contract.make {
                 parameter 'username': 'jdoe'
             }
         }
-        headers {
-            header(contentType(), applicationJson())
-        }
     }
     response {
         status OK()

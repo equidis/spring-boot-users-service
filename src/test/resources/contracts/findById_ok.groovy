@@ -4,9 +4,6 @@ Contract.make {
     request {
         method 'GET'
         urlPath("/users/5fdb5cdad07bba25f645cd87")
-        headers {
-            header(contentType(), applicationJson())
-        }
     }
     response {
         status OK()
