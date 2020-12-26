@@ -27,7 +27,6 @@ repositories {
     mavenCentral()
     jcenter()
     mavenGithub("equidis/sb-commons")
-    maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 dependencies {
