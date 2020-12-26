@@ -17,10 +17,11 @@ class UserDao(@Autowired repository: UserRepository) : MongoDao<User>(repository
         const val JDOE_ID = "5fdb5cdad07bba25f645cd87"
         const val JDOE_USERNAME = "jdoe"
         const val JDOE_MAIL = "jdoe@mail.com"
+        const val MDOE_ID = "5fe773204edcff0fbfbf45e4"
         const val MMOE_USERNAME = "mmoe"
         const val MMOE_MAIL = "mmoe@mail.com"
         val jdoe = User(JDOE_USERNAME, JDOE_MAIL, Locale.FRANCE.country, "John", "Doe", "+33123456789", ObjectId(JDOE_ID))
-        val mmoe = User(MMOE_USERNAME, MMOE_MAIL, Locale.UK.country)
+        val mmoe = User(MMOE_USERNAME, MMOE_MAIL, Locale.UK.country, id = ObjectId(MDOE_ID))
 
         override fun data() = listOf(jdoe, mmoe)
     }
