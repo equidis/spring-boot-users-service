@@ -56,6 +56,9 @@ jib {
     to {
         image = "eu.gcr.io/equidis/springboot-users:${project.version}"
     }
+    from {
+        image = "gcr.io/distroless/java:11"
+    }
 }
 
 tasks {
