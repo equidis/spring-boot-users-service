@@ -1,6 +1,6 @@
 spring:
   application:
-    name: sb-users
+    name: users
   cache:
     type: redis
     cache-names: users
