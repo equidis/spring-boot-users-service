@@ -91,6 +91,10 @@ tasks {
         app:
           name: ${project.name}
           version: ${project.version}
+          kind: http
+          dependencies:
+            mongodb: true
+            redis: true
         image:
           name: sb-${project.name}
     """.trimIndent(), StandardOpenOption.SYNC
