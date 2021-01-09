@@ -89,14 +89,14 @@ tasks {
                 metadataPath,
                 """
         app:
-          name: ${project.name}
+          name: users
           version: ${project.version}
           kind: http
           dependencies:
             mongodb: true
             redis: true
         image:
-          name: sb-${project.name}
+          name: sb-users
     """.trimIndent(), StandardOpenOption.SYNC
             )
         }
