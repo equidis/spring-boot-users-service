@@ -6,6 +6,7 @@ import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 
 val commonsVersion: String by project
+val imageName = "springboot-users"
 
 plugins {
     idea
@@ -54,7 +55,7 @@ tasks.withType<Test> {
 
 jib {
     to {
-        image = "eu.gcr.io/equidis/springboot-users:${project.version}"
+        image = "eu.gcr.io/equidis/$imageName:${project.version}"
     }
     from {
         image = "gcr.io/distroless/java:11"
@@ -96,7 +97,7 @@ tasks {
             mongodb: true
             redis: true
         image:
-          name: sb-users
+          name: $imageName
     """.trimIndent(), StandardOpenOption.SYNC
             )
         }
