@@ -7,6 +7,7 @@ import java.nio.file.StandardOpenOption
 
 val commonsVersion: String by project
 val imageName = "springboot-users"
+val gcloudProjectId = System.getenv("GCP_PROJECT_ID") ?: "gcloud-equidis"
 
 plugins {
     idea
@@ -55,7 +56,7 @@ tasks.withType<Test> {
 
 jib {
     to {
-        image = "eu.gcr.io/equidis/$imageName:${project.version}"
+        image = "eu.gcr.io/$gcloudProjectId/$imageName:${project.version}"
     }
     from {
         image = "gcr.io/distroless/java:11"
