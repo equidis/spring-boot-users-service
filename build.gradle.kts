@@ -17,7 +17,7 @@ plugins {
     id("org.springframework.cloud.contract") version "3.0.2"
     id("com.google.cloud.tools.jib") version "2.8.0"
     kotlin("jvm") version "1.4.31"
-    kotlin("plugin.spring") version "1.4.31"
+    kotlin("plugin.spring") version "1.4.32"
 }
 
 group = "com.github.jntakpe"
