@@ -14,7 +14,7 @@ plugins {
     `maven-publish`
     jacoco
     id("org.springframework.boot") version "2.4.5"
-    id("org.springframework.cloud.contract") version "3.0.2"
+    id("org.springframework.cloud.contract") version "3.0.3"
     id("com.google.cloud.tools.jib") version "3.0.0"
     kotlin("jvm") version "1.4.32"
     kotlin("plugin.spring") version "1.4.32"
